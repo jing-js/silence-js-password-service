@@ -1,0 +1,30 @@
+{
+  "name": "silence-js-password-service",
+  "version": "1.0.0",
+  "description": "password service for silence-js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "silence-password-server": "./bin/silence-password-server.js",
+    "silence-password-client": "./bin/silence-password-client.js"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "silence-js-log-file": "^1.0.2"
+  },
+  "devDependencies": {
+    "silence-js-log-console": "^1.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jing-js/silence-js-password-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jing-js/silence-js-password-service/issues"
+  },
+  "homepage": "https://github.com/jing-js/silence-js-password-service#readme",
+  "author": "YuhangGe <abeyuhang@gmail.com>",
+  "license": "ISC"
+}
