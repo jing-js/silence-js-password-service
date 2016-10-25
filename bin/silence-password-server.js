@@ -27,7 +27,7 @@ program
   .option('--password-count [passwordCount]', 'Password count, default is 7', parseInt)
   .option('--passowrd-length [passwordLength]', 'Password length, default is 64 bytes', parseInt)
   .option('--expire [expire]', 'Expire time for each password in msec, default is eight hours', parseInt)
-  .option('--offset [offset]', 'Password expire time offset in msec, default is 0', parseInt)
+  .option('--offset [offset]', 'Password expire time offset in msec, default is 0')
   .option('--interval [interval]', 'Password interval time in msec, default is five minutes', parseInt)
   .parse(process.argv);
 
@@ -57,6 +57,14 @@ mergeConfig(defaultConfig, {
   }
 });
 
+if (defaultConfig.password.offset) {
+  if (/^\d+$/.test(defaultConfig.password.offset)) {
+    defaultConfig.password.offset = parseInt(defaultConfig.password.offset);
+  } else {
+    defaultConfig.password.offset = new Date(defaultConfig.password.offset).getTime();
+  }
+}
+
 defaultConfig.logger = defaultConfig.logger.toLowerCase() !== 'file' ? new ConsoleLogger({
   level: defaultConfig.logLevel
 }) : new FileLogger({
@@ -78,6 +86,7 @@ app.init().then(() => {
 
   server.listen(defaultConfig.listen.port, defaultConfig.listen.host, () => {
     app.logger.info(`Silence Password Server listen at ${defaultConfig.listen.host}:${defaultConfig.listen.port}`);
+    app.logger.info('Password config:', JSON.stringify(defaultConfig.password, null, 2));
   });
 
   process.on('uncaughtException', err => {

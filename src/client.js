@@ -138,7 +138,7 @@ class Client {
               }
             }
             if (!found) {
-              newPasswords[i] = new Password(p.ts, p.value);
+              newPasswords[i] = new Password(p.ts, new Buffer(p.value, 'base64'));
             }
           }
           this.passwords = newPasswords;
@@ -148,8 +148,11 @@ class Client {
       }).on('error', reject);
     });
   }
-  get now() {
+  now() {
     return Date.now() + this.delta;
+  }
+  nowTS() {
+    return this.calcTS(this.now());
   }
   calcTS(timestamp) {
     return Math.floor((timestamp - this.offset) / this.expire);
